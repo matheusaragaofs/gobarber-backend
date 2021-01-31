@@ -1,10 +1,9 @@
 import { startOfHour } from 'date-fns';
-import { getCustomRepository } from 'typeorm';
 
 import AppError from '@shared/errors/AppError';
 
 import Appointment from '../infra/typeorm/entities/Appointment';
-import AppointmentsRepository from '../infra/typeorm/repositories/AppointmentsRepository';
+import IAppointmentsRepository from '../repositories/IAppointmentsRepository'
 
 interface Request {
   provider_id: string;
@@ -12,11 +11,15 @@ interface Request {
 }
 
 class ClassAppointmentService {
+
+  constructor ( private appointmentRepository: IAppointmentsRepository) {
+    //se eu colocar o private na frente, ele cria automaticamente a variável
+  }
+
   public async execute({ provider_id, date }: Request): Promise<Appointment> {
-    const appointmentsRepository = getCustomRepository(AppointmentsRepository);
     const appointmentDate = startOfHour(date);
 
-    const findAppointmentInSameDate = await appointmentsRepository.findByDate(
+    const findAppointmentInSameDate = await this.appointmentRepository.findByDate(
       appointmentDate,
     );
 
@@ -25,7 +28,7 @@ class ClassAppointmentService {
       throw new AppError('This appointment is already booked');
     }
 
-    const appointment = await appointmentsRepository.create({
+    const appointment = await this.appointmentRepository.create({
       provider_id,
       date: appointmentDate,
     });
