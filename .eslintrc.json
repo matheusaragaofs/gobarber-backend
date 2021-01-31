@@ -8,8 +8,6 @@
         "plugin:@typescript-eslint/recommended",
         "prettier/@typescript-eslint",
         "plugin:prettier/recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "eslint-config-prettier/@typescript-eslint"
 
 
     ],
@@ -24,14 +22,14 @@
     ],
     "rules": {
 
-      "@typescript-eslint/naming-convention": [
-        "error",
-        {
-          "selector": "interface",
-          "prefix": ["I"],
-          "format": ["PascalCase"]
-        }
-      ],
+      // "@typescript-eslint/naming-convention": [
+      //   "error",
+      //   {
+      //     "selector": "interface",
+      //     "prefix": ["I"],
+      //     "format": ["PascalCase"]
+      //   }
+      // ],
 
 
         "prettier/prettier": "error",
