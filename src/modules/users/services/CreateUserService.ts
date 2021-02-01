@@ -4,6 +4,8 @@ import { getRepository } from 'typeorm';
 import User from '../infra/typeorm/entities/User';
 import AppError from '../../../shared/errors/AppError';
 
+import { inject, injectable} from 'tsyringe'
+
 import IUsersRepository from '../repositories/IUsersRepository'
 
 interface Request {
@@ -14,9 +16,11 @@ interface Request {
 // execute(data:Request)
 // data.name
 // mas farei a desestruturação
-
+@injectable()
 export default class CreateUserService {
-  constructor ( private usersRepository: IUsersRepository ) {}
+  constructor (
+    @inject('UserRepositoryID')
+    private usersRepository: IUsersRepository ) {}
 
   public async execute({ name, email, password }: Request): Promise<User> {
 

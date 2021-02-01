@@ -2,6 +2,8 @@ import { Router } from 'express';
 import multer from 'multer';
 import uploadConfig from '@config/upload';
 
+import { container } from 'tsyringe';
+
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository'
 
 import CreateUserService from '@modules/users/services/CreateUserService';
@@ -41,10 +43,8 @@ userRouter.patch(
   ensureAuthenticated,
   upload.single('avatar'), // nome do campo que vai conter a imagem quando eu chamar essa rota.
   async (request, response) => {
-    
-    const usersRepository = new UsersRepository()
 
-    const updateUserAvatar = new UpdateUserAvatarService(usersRepository);
+    const updateUserAvatar = container.resolve(UpdateUserAvatarService)
     const user = await updateUserAvatar.execute({
       user_id: request.user.id,
       avatarFileName: request.file.filename,

@@ -2,6 +2,8 @@ import { startOfHour } from 'date-fns';
 
 import AppError from '@shared/errors/AppError';
 
+import { injectable, inject} from 'tsyringe'
+
 import Appointment from '../infra/typeorm/entities/Appointment';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository'
 
@@ -10,9 +12,13 @@ interface Request {
   date: Date;
 }
 
+@injectable()
 class ClassAppointmentService {
+  constructor (
+  @inject('AppointmentsRepositoryID')
+  private appointmentRepository: IAppointmentsRepository) {
 
-  constructor ( private appointmentRepository: IAppointmentsRepository) {
+
     //se eu colocar o private na frente, ele cria automaticamente a variável
   }
 
