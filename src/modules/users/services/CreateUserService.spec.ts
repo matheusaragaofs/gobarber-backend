@@ -1,45 +1,48 @@
-import 'reflect-metadata';
-import AppError from '@shared/errors/AppError'
-import CreateUserService from './CreateUserService'
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository'
+import AppError from '@shared/errors/AppError';
 
+import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
+import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
+import CreateUserService from './CreateUserService';
 
-  describe('CreateUser',()=>{
-    it('should be able to create a new user',async ()=>{
+describe('CreateUser', () => {
+  it('should be able to create a new user', async () => {
+    const fakeUsersRepository = new FakeUsersRepository();
+    const fakeHashProvider = new FakeHashProvider();
+    const createUser = new CreateUserService(
+      fakeUsersRepository,
+      fakeHashProvider,
+    );
 
-      const fakeUsersRepository = new FakeUsersRepository()
-      const createUserService = new CreateUserService(fakeUsersRepository)
+    const user = await createUser.execute({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: '123123',
+    });
 
-      const appointment = await createUserService.execute({
+    expect(user).toHaveProperty('id');
+  });
+
+  it('should not be able to create a new user with email from another', async () => {
+    const fakeUsersRepository = new FakeUsersRepository();
+    const fakeHashProvider = new FakeHashProvider();
+
+    const createUser = new CreateUserService(
+      fakeUsersRepository,
+      fakeHashProvider,
+    );
+
+    await createUser.execute({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: '123123',
+    });
+
+    expect(
+      createUser.execute({
         name: 'John Doe',
         email: 'johndoe@example.com',
-        password:'40028922'
-
-      })
-      expect(appointment).toHaveProperty('id')
-    })
-
-    it('should not be able to create a new user with an email that already exists',async ()=>{
-
-      const fakeUsersRepository = new FakeUsersRepository()
-      const createUserService = new CreateUserService(fakeUsersRepository)
-
-       await createUserService.execute({
-        name: 'John Doe',
-        email: 'johndoe@example.com',
-        password:'40028922'
-
-      })
-
-      expect( createUserService.execute({
-        name: 'John Doe',
-        email: 'johndoe@example.com',
-        password:'40028922'
-
-      })).rejects.toBeInstanceOf(AppError)
-
-    })
-
-
-
-  })
+        password: '123123',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+});
