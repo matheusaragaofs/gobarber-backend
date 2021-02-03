@@ -4,20 +4,20 @@ import User from '../infra/typeorm/entities/User';
 import AppError from '../../../shared/errors/AppError';
 import IUsersRepository from '../repositories/IUsersRepository';
 
-interface Request {
+interface IRequest {
   user_id: string;
   avatarFileName: string;
 }
 @injectable()
 export default class UpdateUserAvatarService {
   constructor(
-    @inject('UserRepositoryID')
+    @inject('UserRepository')
     private usersRepository: IUsersRepository,
-    @inject('StorageProviderID')
+    @inject('StorageProvider')
     private storageProvider: IStorageProvider,
   ) {}
 
-  public async execute({ user_id, avatarFileName }: Request): Promise<User> {
+  public async execute({ user_id, avatarFileName }: IRequest): Promise<User> {
     const user = await this.usersRepository.findById(user_id);
     if (!user) {
       throw new AppError('Only authenticaded users can change avatar', 401);

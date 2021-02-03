@@ -21,10 +21,10 @@ interface IResponse {
 @injectable()
 class AuthenticateUserService {
   constructor(
-    @inject('UsersRepositoryID')
+    @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
-    @inject('HashProviderID')
+    @inject('HashProvider')
     private hashProvider: IHashProvider,
   ) {}
 
