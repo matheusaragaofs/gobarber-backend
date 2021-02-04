@@ -1,15 +1,12 @@
-
-import { Request, Response } from 'express'
-import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository'
+import { Request, Response } from 'express';
+import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 import CreateUserService from '@modules/users/services/CreateUserService';
 
 export default class UsersController {
-
-  public async create(request:Request, response:Response): Promise<Response> {
-
+  public async create(request: Request, response: Response): Promise<Response> {
     const { name, email, password } = request.body;
 
-    const usersRepository = new UsersRepository()
+    const usersRepository = new UsersRepository();
 
     const createUser = new CreateUserService(usersRepository);
 
@@ -28,6 +25,5 @@ export default class UsersController {
     };
 
     return response.json(userWithoutPassword);
-
-}
+  }
 }
