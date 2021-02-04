@@ -2,33 +2,31 @@ import { startOfHour } from 'date-fns';
 
 import AppError from '@shared/errors/AppError';
 
-import { injectable, inject} from 'tsyringe'
+import { injectable, inject } from 'tsyringe';
 
 import Appointment from '../infra/typeorm/entities/Appointment';
-import IAppointmentsRepository from '../repositories/IAppointmentsRepository'
+import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
-interface Request {
+interface IRequest {
   provider_id: string;
   date: Date;
 }
 
 @injectable()
 class ClassAppointmentService {
-  constructor (
-  @inject('AppointmentsRepositoryID')
-  private appointmentRepository: IAppointmentsRepository) {
-
-
-    //se eu colocar o private na frente, ele cria automaticamente a variável
+  constructor(
+    @inject('AppointmentsRepository')
+    private appointmentRepository: IAppointmentsRepository,
+  ) {
+    // se eu colocar o private na frente, ele cria automaticamente a variável
   }
 
-  public async execute({ provider_id, date }: Request): Promise<Appointment> {
+  public async execute({ provider_id, date }: IRequest): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
 
     const findAppointmentInSameDate = await this.appointmentRepository.findByDate(
       appointmentDate,
     );
-
 
     if (findAppointmentInSameDate) {
       throw new AppError('This appointment is already booked');
