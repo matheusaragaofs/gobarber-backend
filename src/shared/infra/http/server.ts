@@ -12,7 +12,7 @@ import '@shared/container';
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use('/files', express.static(uploadConfig.tmpFolder));
+app.use('/files', express.static(uploadConfig.uploadFolder));
 app.use(routes);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

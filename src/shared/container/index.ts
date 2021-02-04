@@ -1,7 +1,7 @@
 import { container } from 'tsyringe';
 
-import '@modules/users/providers/index'; // pra poder ser cadastrado
-import './providers';
+import '@modules/users/providers/index'; // HashProvider
+import './providers'; // Mailprovider
 
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import AppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentsRepository';

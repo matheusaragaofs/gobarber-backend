@@ -4,8 +4,8 @@ import path from 'path';
 
 const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
 export default {
-  tmpFolder: tmpFolder,
-  uploadFolder: path.resolve(tmpFolder,'uploads'),
+  tmpFolder,
+  uploadFolder: path.resolve(tmpFolder, 'uploads'),
 
   // quando fizer upload ficará salvo na própria aplicação
   storage: multer.diskStorage({
