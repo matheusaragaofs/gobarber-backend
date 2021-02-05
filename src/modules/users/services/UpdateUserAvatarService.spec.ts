@@ -17,7 +17,7 @@ describe('UpdateUserAvatar', () => {
       fakeStorageProvider,
     );
   });
-  it('should be able to create a new user', async () => {
+  it('should be able to update an avatar', async () => {
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -41,7 +41,7 @@ describe('UpdateUserAvatar', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should delete old avatar when updating new one            ', async () => {
+  it('should delete old avatar when updating new one', async () => {
     const deleteFile = jest.spyOn(fakeStorageProvider, 'deleteFile');
 
     const user = await fakeUsersRepository.create({

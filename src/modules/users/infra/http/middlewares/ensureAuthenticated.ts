@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 
-interface TokenPayload {
+interface ITokenPayload {
   iat: number;
   exp: number;
   sub: string;
@@ -25,7 +25,7 @@ export default function ensureAuthenticated(
   try {
     const decoded = verify(token, secret);
     // decoded as TokenPayload estou forçando essa variável ser do tipo TokenPayload, para gerar auto-complete
-    const { sub } = decoded as TokenPayload;
+    const { sub } = decoded as ITokenPayload;
     request.user = {
       id: sub,
     };
