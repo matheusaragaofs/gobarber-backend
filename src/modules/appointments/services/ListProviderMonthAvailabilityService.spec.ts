@@ -24,7 +24,39 @@ describe('ListProviderMonthAvalability', () => {
     });
     await fakeAppointmentsRepository.create({
       provider_id: 'user',
-      date: new Date(2020, 4, 20, 10, 0, 0), // Isso é a construção de um objeto date no javascript, os meses começam de 0 até 11.
+      date: new Date(2020, 4, 20, 9, 0, 0), // Isso é a construção de um objeto date no javascript, os meses começam de 0 até 11.
+    });
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 20, 10, 0, 0),
+    });
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 20, 11, 0, 0),
+    });
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 20, 12, 0, 0),
+    });
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 20, 13, 0, 0),
+    });
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 20, 14, 0, 0),
+    });
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 20, 15, 0, 0),
+    });
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 20, 16, 0, 0),
+    });
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 4, 20, 17, 0, 0),
     });
     await fakeAppointmentsRepository.create({
       provider_id: 'user',
@@ -48,7 +80,7 @@ describe('ListProviderMonthAvalability', () => {
         },
         {
           day: 21,
-          available: false,
+          available: true,
         },
         {
           day: 22,
