@@ -1,13 +1,13 @@
-/* eslint-disable camelcase */
 import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+
 import User from '@modules/users/infra/typeorm/entities/User';
 
 @Entity('appointments')
@@ -17,11 +17,17 @@ class Appointment {
 
   @Column()
   provider_id: string;
-  // Um usuário pode prestar muitos serviços (appointments)
 
-  @ManyToOne(() => User) // Muitos agendamentos para um usuário
-  @JoinColumn({ name: 'provider_id' }) // Qual é a coluna que vai identificar qual que é o user (prestador) desse agendamento
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'provider_id' })
   provider: User;
+
+  @Column()
+  user_id: string;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @Column('timestamp with time zone')
   date: Date;
