@@ -4,6 +4,7 @@ import 'express-async-errors';
 import cors from 'cors';
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
+import { errors } from 'celebrate';
 import routes from './routes';
 
 import '@shared/infra/typeorm';
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.uploadFolder));
 app.use(routes);
+app.use(errors());
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {

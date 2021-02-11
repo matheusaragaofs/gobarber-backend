@@ -20,6 +20,9 @@ export default class AppointmentsController {
 
       return response.json(appointment);
     } catch (err) {
+      console.log(provider_id);
+      console.log(date);
+
       return response.json({ Err: err });
     }
   }
