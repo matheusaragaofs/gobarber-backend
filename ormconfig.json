@@ -1,6 +1,6 @@
 [
   {
-    "name":"default",
+    "name": "default",
     "type": "postgres",
     "host": "localhost",
     "port": 5432,
@@ -14,20 +14,18 @@
       "./src/shared/infra/typeorm/migrations/*.ts"
     ],
     "cli": {
-      "migrationsDir": "./src/shared/infra/typeorm/migrations/"
+      "migrationsDir": "./src/shared/infra/typeorm/migrations"
     }
   },
   {
-    "name":"mongo",
+    "name": "mongo",
     "type": "mongodb",
     "host": "localhost",
     "port": 27017,
     "database": "gobarber",
     "useUnifiedTopology": true,
-    "schemas": [
+    "entities": [
       "./src/modules/**/infra/typeorm/schemas/*.ts"
     ]
-
-    }
-
+  }
 ]

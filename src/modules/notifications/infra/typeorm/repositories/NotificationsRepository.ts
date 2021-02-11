@@ -1,9 +1,9 @@
 import { getMongoRepository, MongoRepository } from 'typeorm';
 
-import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
 import ICreateNotificationDTO from '@modules/notifications/dtos/ICreateNotifcationDTO';
+import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
 
-import Notification from '@modules/notifications/infra/typeorm/schemas/Notification';
+import Notification from '../schemas/Notification';
 
 class NotificationsRepository implements INotificationsRepository {
   private ormRepository: MongoRepository<Notification>;
@@ -13,10 +13,14 @@ class NotificationsRepository implements INotificationsRepository {
   }
 
   public async create({
-    content,
     recipient_id,
+    content,
   }: ICreateNotificationDTO): Promise<Notification> {
-    const notification = this.ormRepository.create({ content, recipient_id });
+    const notification = this.ormRepository.create({
+      recipient_id,
+      content,
+    });
+
     await this.ormRepository.save(notification);
 
     return notification;
