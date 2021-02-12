@@ -33,7 +33,6 @@ class ListProvidersService {
       console.log('A query no banco foi feita ');
       await this.cacheProvider.save(`providers-list:${user_id}`, users);
     }
-
     return users;
   }
 }
