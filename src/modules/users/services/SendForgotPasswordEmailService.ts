@@ -44,7 +44,7 @@ class SendForgotPasswordEmailService {
         name: user.name,
         email: user.email,
       },
-      subject: '[GoBaberr] Recuperação de senhas',
+      subject: '[GoBaber] Recuperação de senhas',
       templateData: {
         file: forgotPasswordTemplate,
         variables: {

@@ -9,7 +9,7 @@ class DiskStorageProvider implements IStorageProvider {
     // fs.promises garante que vai estar utilizando as funções do filesystem em formato de promises
     await fs.promises.rename(
       path.resolve(uploadConfig.tmpFolder, file),
-      path.resolve(uploadConfig.uploadFolder, 'uploads', file),
+      path.resolve(uploadConfig.uploadFolder, file),
     );
 
     return file;
