@@ -17,7 +17,7 @@ Good morning !!
 
 **RFN**
 
-- Utilizar Mailtrap pra testar envios em ambiente de dev;
+- Utilizar Mailtrap pra testar envios em ambiente de dev;;
 - Utilizar Amazon SES (Simple email service) para envios em produção;
 - O envio de e-mails deve acontecer em segundo plano (background job);
 
