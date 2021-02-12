@@ -1,51 +1,45 @@
-import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRepository';
-import ListProviderDayAvailabilityService from './ListProviderDayAvailabilityService';
+import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
+import ListProvidersService from './ListProvidersService';
 
-let fakeAppointmentsRepository: FakeAppointmentsRepository;
-let listProviderDayAvailability: ListProviderDayAvailabilityService;
+let fakeUsersRepository: FakeUsersRepository;
+let fakeCacheProvider: FakeCacheProvider;
+let listProviders: ListProvidersService;
 
-describe('ListProviderDayAvailability', () => {
+describe('ListProviders', () => {
   beforeEach(() => {
-    fakeAppointmentsRepository = new FakeAppointmentsRepository();
-    listProviderDayAvailability = new ListProviderDayAvailabilityService(
-      fakeAppointmentsRepository,
+    fakeUsersRepository = new FakeUsersRepository();
+    fakeCacheProvider = new FakeCacheProvider();
+
+    listProviders = new ListProvidersService(
+      fakeUsersRepository,
+      fakeCacheProvider,
     );
   });
 
-  it('should be able to list the day availability from provider', async () => {
-    await fakeAppointmentsRepository.create({
-      provider_id: 'user',
-      user_id: 'user',
-      date: new Date(2021, 4, 20, 14, 0, 0),
+  it('should be able to list the providers', async () => {
+    const user1 = await fakeUsersRepository.create({
+      name: 'John Trê',
+      email: 'johntre@example.com',
+      password: '123456',
     });
 
-    await fakeAppointmentsRepository.create({
-      provider_id: 'user',
-      user_id: 'user',
-      date: new Date(2021, 4, 20, 15, 0, 0),
+    const user2 = await fakeUsersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: '123456',
     });
 
-    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
-      return new Date(2021, 4, 20, 11).getTime();
+    const loggedUser = await fakeUsersRepository.create({
+      name: 'John Qua',
+      email: 'johnqua@example.com',
+      password: '123456',
     });
 
-    const availability = await listProviderDayAvailability.execute({
-      provider_id: 'user',
-      year: 2021,
-      month: 5,
-      day: 20,
+    const providers = await listProviders.execute({
+      user_id: loggedUser.id,
     });
 
-    expect(availability).toEqual(
-      expect.arrayContaining([
-        { hour: 8, available: false },
-        { hour: 9, available: false },
-        { hour: 10, available: false },
-        { hour: 13, available: true },
-        { hour: 14, available: false },
-        { hour: 15, available: false },
-        { hour: 16, available: true },
-      ]),
-    );
+    expect(providers).toEqual([user1, user2]);
   });
 });

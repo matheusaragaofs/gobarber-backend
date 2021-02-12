@@ -1,4 +1,4 @@
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 import { isEqual, getDate, getMonth, getYear } from 'date-fns';
 
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
