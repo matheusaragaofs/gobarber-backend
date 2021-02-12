@@ -10,7 +10,6 @@ export default class RedisCacheProvider implements ICacheProvider {
   }
 
   public async save(key: string, value: any): Promise<void> {
-    console.log(key, value);
     await this.client.set(key, JSON.stringify(value));
   }
 
@@ -24,7 +23,10 @@ export default class RedisCacheProvider implements ICacheProvider {
     return parsedData;
   }
 
-  // public async invalidate(key: string): Promise<void> {}
+  public async invalidate(key: string): Promise<void> {
+    await this.client.del(key);
+  }
+
   public async invalidatePrefix(prefix: string): Promise<void> {
     const keys = await this.client.keys(`${prefix}:*`); // meu prefixo, "dois pontos": tudo que vem depois dele
     const pipeline = await this.client.pipeline();
