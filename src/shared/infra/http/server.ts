@@ -12,10 +12,10 @@ import '@shared/infra/typeorm';
 import '@shared/container';
 
 const app = express();
-app.use(rateLimiter);
 app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.uploadFolder));
+app.use(rateLimiter); // colocando depois do files, ele nao aplicar limite de requisição pra imagens, pois la no front end vao ser muitas imagens
 app.use(routes);
 app.use(errors());
 
